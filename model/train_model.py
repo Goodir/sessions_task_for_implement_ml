@@ -95,4 +95,4 @@ print('f1 score у onnx на тесте:', f1_score(y_test, outputs[0], average=
 
 diff_mask = pred_sklearn != pred_onnx
 
-print('Количество ошибок относительно sklearn модели, и общего количество объектов:', diff_mask.sum(), len(pred_sklearn))
+print('Количество ошибок относительно sklearn модели, и общее количество объектов:', diff_mask.sum(), len(pred_sklearn))
