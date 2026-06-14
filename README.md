@@ -218,3 +218,24 @@ duration_ms
 ```bash
 docker compose down
 ```
+
+## A/B-интерфейс
+
+API поддерживает работу с версиями модели через поле `model_version` 
+
+Полную документацию по A/B тестированию можно найти в `README_AB.md`
+
+Пример явного выбора модели:
+
+```bash
+curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json" --data-raw '{"model_version": "v1", "features": [[1, 20000, 2, 2, 1, 24, 2, 2, -1, -1, -2, -2, 3913, 3102, 689, 0, 0, 0, 0, 689, 0, 0, 0, 0]]}'
+```
+
+Также можно не передавать `model_version`, а передать `client_id`. Тогда сервис сам распределит клиента между `v1` и `v2` через hash:
+
+```bash
+curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json" --data-raw '{"client_id": "client_001", "features": [[1, 20000, 2, 2, 1, 24, 2, 2, -1, -1, -2, -2, 3913, 3102, 689, 0, 0, 0, 0, 689, 0, 0, 0, 0]]}'
+```
+
+В ответе API всегда возвращает `model_version`, чтобы было понятно, какая версия модели использовалась
+
