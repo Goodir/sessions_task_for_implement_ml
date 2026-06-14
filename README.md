@@ -246,3 +246,17 @@ curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json"
 ```bash
 docker compose down
 ```
+## API demonstration
+
+### Test Api
+
+![Test api demo](docs/demo_screenshots/test_api_demo.png)
+
+### Curl test
+
+![Curl demo](docs/demo_screenshots/curl_demo.png)
+
+### Logs demo
+
+![Logs demo](docs/demo_screenshots/logs_demo.png)
+
