@@ -13,7 +13,7 @@
 * uWSGI + NGINX через образ `tiangolo/uwsgi-nginx-flask`
 * JSON-логирование запросов к `/predict`
 * тестовый скрипт для проверки API
-* описание MLOps-концептов и A/B-тестирования
+* описание выбора архитектуры, MLOps-концептов и A/B-тестирования
 
 ## Стек
 
@@ -46,6 +46,7 @@ NGINX
 ├── docker-compose.yml
 ├── requirements.txt
 ├── uwsgi.ini
+├── ARCHITECTURE.md
 ├── MLops_CONCEPT.md
 ├── README.md
 └── README_AB.md
@@ -61,6 +62,11 @@ Fedora Server в UTM, Python 3.14
 ```
 
 В обоих случаях сервис запускается, контейнер собирается, API отвечает и тестовый скрипт проходит
+
+## Docker Hub
+Образа на Docker Hub сюда можно взять от сюда, или забилдить самому через docker-compose и dockerFile
+
+Docker Hub image: https://hub.docker.com/r/sotnikovantn/session_project-ml-api
 
 ## Быстрый запуск
 
