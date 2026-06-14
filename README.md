@@ -8,10 +8,12 @@
 
 * обучение модели и сохранение в ONNX
 * Flask API с endpoint'ами `/health` и `/predict`
+* A/B-интерфейс через поле `model_version`
 * запуск через Docker и Docker Compose
 * uWSGI + NGINX через образ `tiangolo/uwsgi-nginx-flask`
 * JSON-логирование запросов к `/predict`
 * тестовый скрипт для проверки API
+* описание MLOps-концептов и A/B-тестирования
 
 ## Стек
 
@@ -35,7 +37,8 @@ NGINX
 │   └── model_handler.py
 ├── model
 │   ├── train_model.py
-│   ├── model.onnx
+│   ├── model_v1.onnx
+│   ├── model_v2.onnx
 │   └── UCI_Credit_Card.csv
 ├── tests
 │   └── test_api.py
@@ -43,7 +46,8 @@ NGINX
 ├── docker-compose.yml
 ├── requirements.txt
 ├── uwsgi.ini
-└── README.md
+├── README.md
+└── README_AB.md
 ```
 
 ## Проверенные окружения
@@ -123,15 +127,17 @@ python tests/test_api.py
 
 ## Пример запроса к `/predict`
 
+Запрос лучше запускать в одну строку, чтобы не было проблем с переносами в терминале
 
 ```bash
-curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json" --data-raw '{"features": [[1, 20000, 2, 2, 1, 24, 2, 2, -1, -1, -2, -2, 3913, 3102, 689, 0, 0, 0, 0, 689, 0, 0, 0, 0]]}'
+curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json" --data-raw '{"model_version": "v1", "features": [[1, 20000, 2, 2, 1, 24, 2, 2, -1, -1, -2, -2, 3913, 3102, 689, 0, 0, 0, 0, 689, 0, 0, 0, 0]]}'
 ```
 
 Пример ответа:
 
 ```json
 {
+  "model_version": "v1",
   "prediction": [1],
   "probability": [
     {
@@ -147,7 +153,10 @@ curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json"
 `prediction = 1` означает, что модель предсказывает дефолт
 
 `probability` показывает вероятность классов `0` и `1`
+`model_version` показывает версию модели, которая использовалась для предсказания
 `request_id` нужен, чтобы связать ответ API с записью в логах
+
+Сейчас в проекте используется одна модель `v1`. Поле `model_version` добавлено как интерфейсная заготовка под A/B-тестирование
 
 ## Повторное обучение модели
 
@@ -159,7 +168,7 @@ curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json"
 python model/train_model.py
 ```
 
-Скрипт обучает sklearn pipeline, сохраняет модель в `model/model.onnx`, а потом проверяет, что ONNX-модель дает такой же результат, как исходная sklearn-модель
+Скрипт обучает sklearn pipeline, сохраняет модель в `model/model_v1.onnx`, а потом проверяет, что ONNX-модель дает такой же результат, как исходная sklearn-модель
 
 После переобучения лучше пересобрать контейнер:
 
