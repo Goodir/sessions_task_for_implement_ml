@@ -1,4 +1,5 @@
 .venv
+.DS_Store
 .notebooks
 __pycache__/
 .ipynb_checkpoints/
