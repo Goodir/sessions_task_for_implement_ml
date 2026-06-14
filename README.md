@@ -46,6 +46,7 @@ NGINX
 ├── docker-compose.yml
 ├── requirements.txt
 ├── uwsgi.ini
+├── MLops_CONCEPT.md
 ├── README.md
 └── README_AB.md
 ```
@@ -213,11 +214,6 @@ duration_ms
 
 Полные признаки клиента в лог не пишутся, потому что для кредитного скоринга это могут быть чувствительные данные
 
-## Остановка сервиса
-
-```bash
-docker compose down
-```
 
 ## A/B-интерфейс
 
@@ -239,3 +235,8 @@ curl -X POST "http://127.0.0.1:8080/predict" -H "Content-Type: application/json"
 
 В ответе API всегда возвращает `model_version`, чтобы было понятно, какая версия модели использовалась
 
+## Остановка сервиса
+
+```bash
+docker compose down
+```
