@@ -64,7 +64,7 @@ Fedora Server в UTM, Python 3.14
 В обоих случаях сервис запускается, контейнер собирается, API отвечает и тестовый скрипт проходит
 
 ## Docker Hub
-Образа на Docker Hub сюда можно взять от сюда, или забилдить самому через docker-compose и dockerFile
+Образа на Docker Hub можно скачать по ссылки ниже, или забилдить самому через docker-compose и dockerFile
 
 Docker Hub image: https://hub.docker.com/r/sotnikovantn/session_project-ml-api
 
