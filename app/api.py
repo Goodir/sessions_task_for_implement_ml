@@ -33,7 +33,7 @@ def pred():
     request_id = str(uuid.uuid4())
 
     data = request.get_json()
-    result = model_handler.get_predict(data)
+    result, model_version = model_handler.get_predict(data)
 
     prediction = result[0].tolist()
     probability = result[1]
@@ -43,13 +43,14 @@ def pred():
         "request_id": request_id,
         "endpoint": "/predict",
         "status_code": 200,
-        "model_version": "v1",
+        "model_version": model_version,
         "input_rows": len(data.get("features", [])),
         "prediction": prediction,
         "duration_ms": round((time.perf_counter() - start_time) * 1000, 2)
     })
 
     return jsonify({
+        "model_version": model_version,
         "prediction": prediction,
         "probability": probability,
         "request_id": request_id

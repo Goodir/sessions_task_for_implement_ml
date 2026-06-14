@@ -8,7 +8,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 DATA_PATH = PROJECT_ROOT / "model" / "UCI_Credit_Card.csv"
-MODEL_PATH = PROJECT_ROOT / "model" / "model.onnx"
+MODEL_PATH = PROJECT_ROOT / "model" / "model_v1.onnx"
 
 
 print('!'*100)
